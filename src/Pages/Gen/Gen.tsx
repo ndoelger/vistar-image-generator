@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import './Gen.css';
-// import Test from './components/Test';
+import { TextField, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const FormLayout = styled('form')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+  width: '100%',
+});
 
 const Gen = () => {
   interface MatsState {
@@ -36,43 +44,68 @@ const Gen = () => {
         method: 'POST',
         body: formData,
       });
-
     } catch (error) {
       console.log(error);
     }
-
-
-
   };
 
   return (
     <div>
-      Gen
-      <form onSubmit={handleSubmit}>
-        Copy:
-        <input
+      <h1>Genearte Creative</h1>
+      <FormLayout onSubmit={handleSubmit}>
+        <h2>Copy:</h2>
+        <TextField
           type="text"
           onChange={handleChange}
           value={mats.copy}
           name="copy"
           placeholder="Enter Copy"
+          id="outlined-multiline-flexible"
+          label="Multiline"
+          multiline
+          maxRows={4}
         />
-        Brand Book:
-        <input
-          type="file"
-          onChange={handleChange}
-          name="brandBook"
-          placeholder="Upload BrandBook"
-        />
-        Assets:
-        <input
-          type="file"
-          onChange={handleChange}
-          name="assets"
-          placeholder="Upload Assets"
-        />
-        <button>Submit</button>
-      </form>
+        <h2>Brand Book:</h2>
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+        >
+          Upload Brand Book
+          <input
+            type="file"
+            onChange={handleChange}
+            name="brandBook"
+            placeholder="Upload BrandBook"
+            style={{ display: 'none' }}
+          />
+        </Button>
+        <h2>Assets:</h2>
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+        >
+          Upload Assets
+          <input
+            style={{ display: 'none' }}
+            type="file"
+            onChange={handleChange}
+            name="assets"
+            placeholder="Upload Assets"
+          />
+        </Button>
+        <Button
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          type='submit'
+        >
+          Submit
+        </Button>
+      </FormLayout>
     </div>
   );
 };
