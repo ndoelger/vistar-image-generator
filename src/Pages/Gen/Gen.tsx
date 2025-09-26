@@ -1,13 +1,6 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./Gen.css";
 import { TextField, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
-const FormLayout = styled("form")({
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-});
 
 const Gen = () => {
   interface MatsState {
@@ -69,75 +62,63 @@ const Gen = () => {
   };
 
   return (
-    <div>
-      <h1>Generate Creative</h1>
-      <FormLayout onSubmit={handleSubmit}>
-        <h2>Copy:</h2>
-        <TextField
-          type="text"
-          onChange={handleChange}
-          value={mats.copy}
-          name="copy"
-          placeholder="Enter Copy"
-          id="outlined-multiline-flexible"
-          label="Enter Copy"
-          multiline
-          maxRows={4}
-        />
-        {/* <h2>Brand Book:</h2>
-        <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={-1}
-        >
-          Upload Brand Book
-          <input
-            type="file"
+    <div className="app-container">
+      <div className="form-container">
+        <h1>Generate Creative</h1>
+        <form onSubmit={handleSubmit}>
+          <h2>Copy:</h2>
+          <TextField
+            type="text"
             onChange={handleChange}
-            name="brandBook"
-            placeholder="Upload BrandBook"
-            style={{ display: 'none' }}
+            value={mats.copy}
+            name="copy"
+            placeholder="Enter Copy"
+            label="Enter Copy"
+            multiline
+            maxRows={4}
+            className="text-input"
           />
-        </Button> */}
-        <h2>Colors:</h2>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            <h3>Primary</h3>
-            <input className="color-input" type="color" name="priCol" value={mats.priCol} onChange={handleChange} />
+          <h2>Colors:</h2>
+          <div className="color-holder">
+            <div>
+              <h3>Primary</h3>
+              <input className="color-input" type="color" name="priCol" value={mats.priCol} onChange={handleChange} />
+            </div>
+            <div>
+              <h3>Secondary</h3>
+              <input className="color-input" type="color" name="secCol" value={mats.secCol} onChange={handleChange} />
+            </div>
+            <div>
+              <h3>Tertiary</h3>
+              <input className="color-input" type="color" name="terCol" value={mats.terCol} onChange={handleChange} />
+            </div>
           </div>
-          <div>
-            <h3>Secondary</h3>
-            <input className="color-input" type="color" name="secCol" value={mats.secCol} onChange={handleChange} />
-          </div>
-          <div>
-            <h3>Tertiary</h3>
-            <input className="color-input" type="color" name="terCol" value={mats.terCol} onChange={handleChange} />
-          </div>
-        </div>
-        <h2>Assets:</h2>
-        <Button component="label" role={undefined} variant="outlined" tabIndex={-1}>
-          {mats.assets?.name || "Upload Assets"}
-          <input
-            style={{ display: "none" }}
-            type="file"
-            onChange={handleChange}
-            name="assets"
-            placeholder={"Upload Assets"}
-          />
-        </Button>
-        <Button
-          variant="contained"
-          tabIndex={-1}
-          type="submit"
-          size="large"
-          loading={loading}
-          disabled={!mats.assets || !mats.copy}
-        >
-          Submit
-        </Button>
-      </FormLayout>
-      <img src={imgUrl} />
+          <h2>Assets:</h2>
+          <Button className="button" variant="outlined" component="label">
+            {mats.assets?.name || "Upload Assets"}
+            <input
+              style={{ display: "none" }}
+              type="file"
+              onChange={handleChange}
+              name="assets"
+              placeholder={"Upload Assets"}
+            />
+          </Button>
+          <Button
+            className="button"
+            variant="outlined"
+            type="submit"
+            size="large"
+            loading={loading}
+            disabled={!mats.assets || !mats.copy}
+          >
+            Submit
+          </Button>
+        </form>
+      </div>
+      <div className="image-container">
+        <img id="mock-image" src={imgUrl} />
+      </div>
     </div>
   );
 };
