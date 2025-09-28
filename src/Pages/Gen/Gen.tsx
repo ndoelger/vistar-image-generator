@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import "./Gen.css";
 import { TextField, Button } from "@mui/material";
 
@@ -25,7 +25,7 @@ const Gen = () => {
 
   const [imgUrl, setImgUrl] = useState("");
 
-  const [imgUrlResize, setImgUrlResize] = useState({});
+  // const [imgUrlResize, setImgUrlResize] = useState({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, files } = e.target;
@@ -53,9 +53,11 @@ const Gen = () => {
         body: formData,
       });
 
-      const url = await res.text();
+      // const url = await res.text();
 
-      setImgUrl(url);
+      const blob = await res.blob();
+
+      setImgUrl(URL.createObjectURL(blob));
     } catch (error) {
       console.log(error);
     }
@@ -63,19 +65,19 @@ const Gen = () => {
     setLoading(false);
   };
 
-  const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const imgRes = await fetch(imgUrl);
-    const img = await imgRes.blob();
+  // const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   const imgRes = await fetch(imgUrl);
+  //   const img = await imgRes.blob();
 
-    const res = await fetch("http://127.0.0.1:5000/resize", {
-      method: "POST",
-      body: img,
-    });
+  //   const res = await fetch("http://127.0.0.1:5000/resize", {
+  //     method: "POST",
+  //     body: img,
+  //   });
 
-    const urlResizes = await res.json();
+  //   const urlResizes = await res.json();
 
-    setImgUrlResize(urlResizes);
-  };
+  //   setImgUrlResize(urlResizes);
+  // };
 
   return (
     <div className="app-container">
@@ -140,7 +142,7 @@ const Gen = () => {
               Download
             </a>
           </Button>
-          <Button className="button" variant="contained" onClick={handleResize}>
+          <Button className="button" variant="contained">
             Resize
           </Button>
         </div>
