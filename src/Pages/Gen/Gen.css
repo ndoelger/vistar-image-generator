@@ -74,6 +74,7 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   border-radius: 20px;
   width: 50%;
 }
@@ -81,4 +82,12 @@ form {
 #mock-image {
   width: 60%;
   max-height: 850px;
+  margin: 10px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  gap: 20px;
 }

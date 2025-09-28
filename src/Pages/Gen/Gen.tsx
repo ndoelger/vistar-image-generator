@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import "./Gen.css";
 import { TextField, Button } from "@mui/material";
 
@@ -24,6 +24,8 @@ const Gen = () => {
   const [loading, setLoading] = useState(false);
 
   const [imgUrl, setImgUrl] = useState("");
+
+  const [imgUrlResize, setImgUrlResize] = useState({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, files } = e.target;
@@ -59,6 +61,20 @@ const Gen = () => {
     }
 
     setLoading(false);
+  };
+
+  const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const imgRes = await fetch(imgUrl);
+    const img = await imgRes.blob();
+
+    const res = await fetch("http://127.0.0.1:5000/resize", {
+      method: "POST",
+      body: img,
+    });
+
+    const urlResizes = await res.json();
+
+    setImgUrlResize(urlResizes);
   };
 
   return (
@@ -106,7 +122,7 @@ const Gen = () => {
           </Button>
           <Button
             className="button"
-            variant="outlined"
+            variant="contained"
             type="submit"
             size="large"
             loading={loading}
@@ -116,8 +132,18 @@ const Gen = () => {
           </Button>
         </form>
       </div>
-      <div className="image-container">
+      <div className="image-container" style={imgUrl ? {} : { display: "none" }}>
         <img id="mock-image" src={imgUrl} />
+        <div className="button-container">
+          <Button className="button" variant="contained" component="label">
+            <a href={imgUrl} download="img.png" style={{ color: "inherit", textDecoration: "none" }}>
+              Download
+            </a>
+          </Button>
+          <Button className="button" variant="contained" onClick={handleResize}>
+            Resize
+          </Button>
+        </div>
       </div>
     </div>
   );
