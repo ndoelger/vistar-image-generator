@@ -65,19 +65,19 @@ const Gen = () => {
     setLoading(false);
   };
 
-  // const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const imgRes = await fetch(imgUrl);
-  //   const img = await imgRes.blob();
+  const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const imgRes = await fetch(imgUrl);
+    const img = await imgRes.blob();
 
-  //   const res = await fetch("http://127.0.0.1:5000/resize", {
-  //     method: "POST",
-  //     body: img,
-  //   });
+    const res = await fetch("http://127.0.0.1:5000/resize", {
+      method: "POST",
+      body: img,
+    });
 
-  //   const urlResizes = await res.json();
+    const urlResizes = await res.json();
 
-  //   setImgUrlResize(urlResizes);
-  // };
+    setImgUrlResize(urlResizes);
+  };
 
   return (
     <div className="app-container">
@@ -142,7 +142,7 @@ const Gen = () => {
               Download
             </a>
           </Button>
-          <Button className="button" variant="contained">
+          <Button className="button" variant="contained" onClick={handleResize}>
             Resize
           </Button>
         </div>
