@@ -66,17 +66,18 @@ const Gen = () => {
   };
 
   const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     const imgRes = await fetch(imgUrl);
     const img = await imgRes.blob();
 
-    const res = await fetch("http://127.0.0.1:5000/resize", {
+    await fetch("http://127.0.0.1:5000/resize", {
       method: "POST",
       body: img,
     });
 
-    const urlResizes = await res.json();
+    // const urlResizes = await res.json();
 
-    setImgUrlResize(urlResizes);
+    // setImgUrlResize(urlResizes);
   };
 
   return (
