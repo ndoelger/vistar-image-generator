@@ -67,17 +67,27 @@ const Gen = () => {
 
   const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    
     const imgRes = await fetch(imgUrl);
     const img = await imgRes.blob();
 
+    const formData = new FormData();
+    if (mats.assets && mats.copy) {
+      setLoading(true);
+      formData.append("assets", mats.assets);
+      formData.append("copy", mats.copy);
+      formData.append("priCol", mats.priCol);
+      formData.append("secCol", mats.secCol);
+      formData.append("terCol", mats.terCol);
+      formData.append("new_reference", img)
+      console.log(formData);
+    } else alert("Please fill them all out");
+
     await fetch("http://127.0.0.1:5000/resize", {
       method: "POST",
-      body: img,
+      body: formData,
     });
 
-    // const urlResizes = await res.json();
-
-    // setImgUrlResize(urlResizes);
   };
 
   return (
