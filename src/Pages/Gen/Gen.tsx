@@ -24,6 +24,7 @@ const Gen = () => {
   const [loading, setLoading] = useState(false);
 
   const [imgUrl, setImgUrl] = useState("");
+  const [landImgUrl, setLandImgUrl] = useState("");
 
   // const [imgUrlResize, setImgUrlResize] = useState({});
 
@@ -82,11 +83,19 @@ const Gen = () => {
       formData.append("new_reference", img)
       console.log(formData);
     } else alert("Please fill them all out");
+try {
+  
+  const res = await fetch("http://127.0.0.1:5000/resize", {
+    method: "POST",
+    body: formData,
+  });
 
-    await fetch("http://127.0.0.1:5000/resize", {
-      method: "POST",
-      body: formData,
-    });
+  const blob = await res.blob()
+
+  setLandImgUrl(URL.createObjectURL(blob))
+} catch (error) {
+ console.log(error) 
+}
 
   };
 
@@ -147,6 +156,7 @@ const Gen = () => {
       </div>
       <div className="image-container" style={imgUrl ? {} : { display: "none" }}>
         <img id="mock-image" src={imgUrl} />
+        <img id="mock-image" src={landImgUrl} />
         <div className="button-container">
           <Button className="button" variant="contained" component="label">
             <a href={imgUrl} download="img.png" style={{ color: "inherit", textDecoration: "none" }}>
