@@ -25,6 +25,7 @@ const Gen = () => {
 
   const [imgUrl, setImgUrl] = useState("");
   const [landImgUrl, setLandImgUrl] = useState("");
+  const [squareImgUrl, setSquareImgUrl] = useState("");
 
   // const [imgUrlResize, setImgUrlResize] = useState({});
 
@@ -67,8 +68,8 @@ const Gen = () => {
   };
 
   const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     const imgRes = await fetch(imgUrl);
     const img = await imgRes.blob();
 
@@ -80,23 +81,31 @@ const Gen = () => {
       formData.append("priCol", mats.priCol);
       formData.append("secCol", mats.secCol);
       formData.append("terCol", mats.terCol);
-      formData.append("new_reference", img)
+      formData.append("new_reference", img);
       console.log(formData);
     } else alert("Please fill them all out");
-try {
-  
-  const res = await fetch("http://127.0.0.1:5000/resize", {
-    method: "POST",
-    body: formData,
-  });
+    
+    try {
+      const landscape = await fetch("http://127.0.0.1:5000/resize/1536x1024", {
+        method: "POST",
+        body: formData,
+      });
 
-  const blob = await res.blob()
+      const landscapeBlob = await landscape.blob();
 
-  setLandImgUrl(URL.createObjectURL(blob))
-} catch (error) {
- console.log(error) 
-}
+      setLandImgUrl(URL.createObjectURL(landscapeBlob));
+    
+      const square = await fetch("http://127.0.0.1:5000/resize/1024x1024", {
+        method: "POST",
+        body: formData,
+      });
 
+      const squareBlob = await square.blob();
+
+      setSquareImgUrl(URL.createObjectURL(squareBlob));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -157,6 +166,7 @@ try {
       <div className="image-container" style={imgUrl ? {} : { display: "none" }}>
         <img id="mock-image" src={imgUrl} />
         <img id="mock-image" src={landImgUrl} />
+        <img id="mock-image" src={squareImgUrl} />
         <div className="button-container">
           <Button className="button" variant="contained" component="label">
             <a href={imgUrl} download="img.png" style={{ color: "inherit", textDecoration: "none" }}>
