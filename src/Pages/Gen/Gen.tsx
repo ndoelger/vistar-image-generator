@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Gen.css";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Modal } from "@mui/material";
+import Brief from "../../components/Brief";
 
 const Gen = () => {
   interface MatsState {
@@ -28,7 +29,9 @@ const Gen = () => {
   const [landImgUrl, setLandImgUrl] = useState("");
   const [squareImgUrl, setSquareImgUrl] = useState("");
 
-  // const [imgUrlResize, setImgUrlResize] = useState({});
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, files } = e.target;
@@ -71,8 +74,8 @@ const Gen = () => {
   const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    setResLoading(true)
-    
+    setResLoading(true);
+
     const imgRes = await fetch(imgUrl);
     const img = await imgRes.blob();
 
@@ -127,6 +130,10 @@ const Gen = () => {
             maxRows={4}
             className="text-input"
           />
+          <Button onClick={handleOpen}>Open modal</Button>
+          <Modal open={open} onClose={handleClose}>
+            <Brief/>
+          </Modal>
           <h2>Colors:</h2>
           <div className="color-holder">
             <div>
