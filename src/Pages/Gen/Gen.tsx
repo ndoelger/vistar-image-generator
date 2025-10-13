@@ -22,8 +22,11 @@ const Gen = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [resLoading, setResLoading] = useState(false);
 
   const [imgUrl, setImgUrl] = useState("");
+  const [landImgUrl, setLandImgUrl] = useState("");
+  const [squareImgUrl, setSquareImgUrl] = useState("");
 
   // const [imgUrlResize, setImgUrlResize] = useState({});
 
@@ -48,7 +51,7 @@ const Gen = () => {
     } else alert("Please fill them all out");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/generate", {
+      const res = await fetch("https://img-gen-backend-365917279851.us-central1.run.app/generate", {
         method: "POST",
         body: formData,
       });
@@ -65,19 +68,49 @@ const Gen = () => {
     setLoading(false);
   };
 
-  // const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   const imgRes = await fetch(imgUrl);
-  //   const img = await imgRes.blob();
+  const handleResize = async (e: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
 
-  //   const res = await fetch("http://127.0.0.1:5000/resize", {
-  //     method: "POST",
-  //     body: img,
-  //   });
+    setResLoading(true);
 
-  //   const urlResizes = await res.json();
+    const imgRes = await fetch(imgUrl);
+    const img = await imgRes.blob();
 
-  //   setImgUrlResize(urlResizes);
-  // };
+    const formData = new FormData();
+    if (mats.assets && mats.copy) {
+      formData.append("assets", mats.assets);
+      formData.append("copy", mats.copy);
+      formData.append("priCol", mats.priCol);
+      formData.append("secCol", mats.secCol);
+      formData.append("terCol", mats.terCol);
+      formData.append("new_reference", img);
+      console.log(formData);
+    } else alert("Please fill them all out");
+
+    try {
+      const landscape = await fetch("https://img-gen-backend-365917279851.us-central1.run.app/resize/1536x1024", {
+        method: "POST",
+        body: formData,
+      });
+
+      const landscapeBlob = await landscape.blob();
+
+      setLandImgUrl(URL.createObjectURL(landscapeBlob));
+
+      const square = await fetch("https://img-gen-backend-365917279851.us-central1.run.app/resize/1024x1024", {
+        method: "POST",
+        body: formData,
+      });
+
+      const squareBlob = await square.blob();
+
+      setSquareImgUrl(URL.createObjectURL(squareBlob));
+
+      setResLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="app-container">
@@ -135,14 +168,23 @@ const Gen = () => {
         </form>
       </div>
       <div className="image-container" style={imgUrl ? {} : { display: "none" }}>
-        <img id="mock-image" src={imgUrl} />
+        <div className="top-container">
+          <img id="port-image" src={imgUrl} />
+          <img
+            id="square-image"
+            src={squareImgUrl}
+            style={squareImgUrl ? {} : { display: "none" }}
+            onClick={handleResize}
+          />
+        </div>
+        <img id="landscape-image" src={landImgUrl} onClick={handleResize} />
         <div className="button-container">
           <Button className="button" variant="contained" component="label">
             <a href={imgUrl} download="img.png" style={{ color: "inherit", textDecoration: "none" }}>
               Download
             </a>
           </Button>
-          <Button className="button" variant="contained">
+          <Button className="button" variant="contained" onClick={handleResize} loading={resLoading}>
             Resize
           </Button>
         </div>
