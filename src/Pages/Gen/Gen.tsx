@@ -22,6 +22,7 @@ const Gen = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [resLoading, setResLoading] = useState(false);
 
   const [imgUrl, setImgUrl] = useState("");
   const [landImgUrl, setLandImgUrl] = useState("");
@@ -70,6 +71,8 @@ const Gen = () => {
   const handleResize = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    setResLoading(true)
+    
     const imgRes = await fetch(imgUrl);
     const img = await imgRes.blob();
 
@@ -174,7 +177,7 @@ const Gen = () => {
               Download
             </a>
           </Button>
-          <Button className="button" variant="contained" onClick={handleResize}>
+          <Button className="button" variant="contained" onClick={handleResize} loading={resLoading}>
             Resize
           </Button>
         </div>
