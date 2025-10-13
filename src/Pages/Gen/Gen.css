@@ -67,6 +67,7 @@ form {
   gap: 20px;
   margin: auto;
   justify-content: center;
+  align-items: center;
 }
 
 .image-container {
@@ -75,14 +76,27 @@ form {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  /* flex-wrap: wrap; */
   border-radius: 20px;
   width: 50%;
 }
 
-#mock-image {
-  width: 60%;
+.top-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 90%;
+}
+
+#port-image, #square-image, #landscape-image {
+  width: 50%;
   max-height: 850px;
   margin: 10px;
+}
+
+#landscape-image {
+  width: 60%;
 }
 
 .button-container {

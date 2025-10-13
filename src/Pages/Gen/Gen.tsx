@@ -75,7 +75,6 @@ const Gen = () => {
 
     const formData = new FormData();
     if (mats.assets && mats.copy) {
-      setLoading(true);
       formData.append("assets", mats.assets);
       formData.append("copy", mats.copy);
       formData.append("priCol", mats.priCol);
@@ -84,7 +83,7 @@ const Gen = () => {
       formData.append("new_reference", img);
       console.log(formData);
     } else alert("Please fill them all out");
-    
+
     try {
       const landscape = await fetch("http://127.0.0.1:5000/resize/1536x1024", {
         method: "POST",
@@ -94,7 +93,7 @@ const Gen = () => {
       const landscapeBlob = await landscape.blob();
 
       setLandImgUrl(URL.createObjectURL(landscapeBlob));
-    
+
       const square = await fetch("http://127.0.0.1:5000/resize/1024x1024", {
         method: "POST",
         body: formData,
@@ -164,9 +163,11 @@ const Gen = () => {
         </form>
       </div>
       <div className="image-container" style={imgUrl ? {} : { display: "none" }}>
-        <img id="mock-image" src={imgUrl} />
-        <img id="mock-image" src={landImgUrl} />
-        <img id="mock-image" src={squareImgUrl} />
+        <div className="top-container">
+          <img id="port-image" src={imgUrl} />
+          <img id="square-image" src={squareImgUrl} style={squareImgUrl ? {} : { display: "none" }} />
+        </div>
+        <img id="landscape-image" src={landImgUrl} />
         <div className="button-container">
           <Button className="button" variant="contained" component="label">
             <a href={imgUrl} download="img.png" style={{ color: "inherit", textDecoration: "none" }}>
