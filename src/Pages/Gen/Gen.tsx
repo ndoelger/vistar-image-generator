@@ -12,18 +12,16 @@ const Gen = () => {
     priCol: string;
     secCol: string;
     terCol: string;
-    brief: string;
   }
 
   const [mats, setMat] = useState<MatsState>({
     assets: null,
+    logo: null,
+    refImg: null,
     copy: "",
     priCol: "#000000",
     secCol: "#000000",
-    terCol: "#000000",
-    logo: null,
-    refImg: null,
-    brief: ""
+    terCol: "#000000"
   });
 
   const [loading, setLoading] = useState(false);
@@ -32,6 +30,8 @@ const Gen = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [landImgUrl, setLandImgUrl] = useState("");
   const [squareImgUrl, setSquareImgUrl] = useState("");
+
+  const [brief, setBrief] = useState("")
 
   // const [imgUrlResize, setImgUrlResize] = useState({});
 
@@ -53,6 +53,7 @@ const Gen = () => {
       formData.append("terCol", mats.terCol);
       formData.append("ref", mats.refImg);
       formData.append("logo", mats.logo);
+      formData.append("brief", brief)
       console.log(formData);
     } else alert("Please fill them all out");
 
@@ -126,7 +127,7 @@ const Gen = () => {
           <h2>Copy:</h2>
           <TextField type="text" onChange={handleChange} value={mats.copy} name="copy" placeholder="Enter Copy" label="Enter Copy" multiline maxRows={4} className="text-input" />
           <h2>Brief:</h2>
-          <Brief />
+          <Brief brief={brief} setBrief={setBrief} />
           <h2>Colors:</h2>
           <div className="color-holder">
             <div>

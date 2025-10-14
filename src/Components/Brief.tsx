@@ -3,10 +3,10 @@ import { DMA_OPTIONS, KPI_OPTIONS, AUDIENCE_OPTIONS } from "./BriefIndex";
 import { TextField, Button } from "@mui/material";
 import "./Brief.css";
 
-const Brief = () => {
-  const [briefOpts, setBriefOpts] = useState({ dma: "", audience: "", kpi: "" });
+type Props = { brief?: string; setBrief: React.Dispatch<React.SetStateAction<string>> };
 
-  const [brief, setBrief] = useState("");
+const Brief: React.FC<Props> = ({ brief, setBrief }) => {
+  const [briefOpts, setBriefOpts] = useState({ dma: "", audience: "", kpi: "" });
 
   const generateBrief = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -22,7 +22,9 @@ const Brief = () => {
       const brief = await res.text();
 
       setBrief(brief);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -56,7 +58,7 @@ const Brief = () => {
           ))}
         </fieldset>
       </div>
-      <TextField id="brief" value={brief} onChange={(e) => setBrief(e.target.value)} className="text-input" multiline maxRows={20}/>
+      <TextField id="brief" value={brief} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBrief(e.target.value)} className="text-input" multiline maxRows={20} />
       <Button className="button" variant="contained" type="submit" size="large" onClick={generateBrief}>
         Generate Brief
       </Button>
