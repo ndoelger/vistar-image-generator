@@ -54,7 +54,7 @@ const Gen = () => {
     } else alert("Please fill them all out");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/generate", {
+      const res = await fetch("https://img-gen-backend-365917279851.us-central1.run.app/generate", {
         method: "POST",
         body: formData,
       });
@@ -91,7 +91,7 @@ const Gen = () => {
     } else alert("Please fill them all out");
 
     try {
-      const landscape = await fetch("http://127.0.0.1:5000/resize/1536x1024", {
+      const landscape = await fetch("https://img-gen-backend-365917279851.us-central1.run.app/resize/1536x1024", {
         method: "POST",
         body: formData,
       });
@@ -100,7 +100,7 @@ const Gen = () => {
 
       setLandImgUrl(URL.createObjectURL(landscapeBlob));
 
-      const square = await fetch("http://127.0.0.1:5000/resize/1024x1024", {
+      const square = await fetch("https://img-gen-backend-365917279851.us-central1.run.app/resize/1024x1024", {
         method: "POST",
         body: formData,
       });
