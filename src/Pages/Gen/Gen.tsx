@@ -86,7 +86,7 @@ const Gen = () => {
       formData.append("terCol", mats.terCol);
       // formData.append("ref", mats.refImg);
       formData.append("logo", mats.logo);
-      formData.append("new_reference", img);
+      formData.append("new_ref", img);
       console.log(formData);
     } else alert("Please fill them all out");
 
@@ -174,7 +174,7 @@ const Gen = () => {
             </a>
           </Button>
           <Button className="button" variant="contained" onClick={handleResize} loading={resLoading}>
-            Resize
+            {landImgUrl && squareImgUrl ? "Refresh Resize" : "Resize"}
           </Button>
         </div>
       </div>
