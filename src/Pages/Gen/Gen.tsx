@@ -44,14 +44,14 @@ const Gen = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    if (mats.assets && mats.copy && mats.refImg && mats.logo) {
+    if (mats.assets && mats.copy && mats.logo) {
       setLoading(true);
       formData.append("assets", mats.assets);
       formData.append("copy", mats.copy);
       formData.append("priCol", mats.priCol);
       formData.append("secCol", mats.secCol);
       formData.append("terCol", mats.terCol);
-      formData.append("ref", mats.refImg);
+      if(mats.refImg)formData.append("ref", mats.refImg);
       formData.append("logo", mats.logo);
       formData.append("brief", brief)
       console.log(formData);
@@ -82,7 +82,7 @@ const Gen = () => {
     const img = await imgRes.blob();
 
     const formData = new FormData();
-    if (mats.assets && mats.copy && mats.refImg && mats.logo) {
+    if (mats.assets && mats.copy && mats.logo) {
       formData.append("assets", mats.assets);
       formData.append("copy", mats.copy);
       formData.append("priCol", mats.priCol);
@@ -162,7 +162,7 @@ const Gen = () => {
             {mats.assets?.name || "Upload Assets"}
             <input style={{ display: "none" }} type="file" onChange={handleChange} name="assets" placeholder={"Upload Assets"} />
           </Button> */}
-          <Button className="button" variant="contained" type="submit" size="large" loading={loading} disabled={!mats.assets || !mats.copy}>
+          <Button className="button" variant="contained" type="submit" size="large" loading={loading} disabled={!mats.assets || !mats.copy || !mats.logo}>
             {imgUrl ? "Refresh" : "Submit"}
           </Button>
         </form>
