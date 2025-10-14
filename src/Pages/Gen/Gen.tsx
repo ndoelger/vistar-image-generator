@@ -12,6 +12,7 @@ const Gen = () => {
     priCol: string;
     secCol: string;
     terCol: string;
+    brief: string;
   }
 
   const [mats, setMat] = useState<MatsState>({
@@ -22,6 +23,7 @@ const Gen = () => {
     terCol: "#000000",
     logo: null,
     refImg: null,
+    brief: ""
   });
 
   const [loading, setLoading] = useState(false);

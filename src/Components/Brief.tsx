@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { DMA_OPTIONS, KPI_OPTIONS, AUDIENCE_OPTIONS } from "./BriefIndex";
+import { TextField, Button } from "@mui/material";
+import "./Brief.css";
 
 const Brief = () => {
   const [briefOpts, setBriefOpts] = useState({ dma: "", audience: "", kpi: "" });
@@ -19,41 +21,45 @@ const Brief = () => {
 
       const brief = await res.text();
 
-      console.log(brief);
+      setBrief(brief);
     } catch (error) {}
   };
 
   return (
     <div>
-      <fieldset>
-        <h2>DMAs</h2>
-        {DMA_OPTIONS.map((opt) => (
-          <label key={opt.label}>
-            <input type="radio" name="dma" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
-            {opt.label}
-          </label>
-        ))}
-      </fieldset>
-      <fieldset>
-        <h2>Audience</h2>
-        {AUDIENCE_OPTIONS.map((opt) => (
-          <label key={opt.label}>
-            <input type="radio" name="audience" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
-            {opt.label}
-          </label>
-        ))}
-      </fieldset>
-      <fieldset>
-        <h2>KPI Goals</h2>
-        {KPI_OPTIONS.map((opt) => (
-          <label key={opt.label}>
-            <input type="radio" name="kpi" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
-            {opt.label}
-          </label>
-        ))}
-      </fieldset>
-      <input type="text" value={brief} onChange={(e) => setBrief(e.target.value)} />
-      <button onClick={generateBrief}>Generate Brief</button>
+      <div id="brief-holder">
+        <fieldset className="radio-holder">
+          <h3>DMAs</h3>
+          {DMA_OPTIONS.map((opt) => (
+            <label key={opt.label}>
+              <input type="radio" name="dma" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
+              {opt.label}
+            </label>
+          ))}
+        </fieldset>
+        <fieldset className="radio-holder">
+          <h3>Audience</h3>
+          {AUDIENCE_OPTIONS.map((opt) => (
+            <label key={opt.label}>
+              <input type="radio" name="audience" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
+              {opt.label}
+            </label>
+          ))}
+        </fieldset>
+        <fieldset className="radio-holder">
+          <h3>KPI Goals</h3>
+          {KPI_OPTIONS.map((opt) => (
+            <label key={opt.label}>
+              <input type="radio" name="kpi" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
+              {opt.label}
+            </label>
+          ))}
+        </fieldset>
+      </div>
+      <TextField id="brief" value={brief} onChange={(e) => setBrief(e.target.value)} className="text-input" multiline maxRows={20}/>
+      <Button className="button" variant="contained" type="submit" size="large" onClick={generateBrief}>
+        Generate Brief
+      </Button>
     </div>
   );
 };
