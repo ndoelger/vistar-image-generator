@@ -4,8 +4,9 @@ import { TextField, Button } from "@mui/material";
 
 const Gen = () => {
   interface MatsState {
-    brandBook: File | null;
     assets: File | null;
+    logo: File | null;
+    refImg: File | null;
     copy: string;
     priCol: string;
     secCol: string;
@@ -13,12 +14,13 @@ const Gen = () => {
   }
 
   const [mats, setMat] = useState<MatsState>({
-    brandBook: null,
     assets: null,
     copy: "",
     priCol: "#000000",
     secCol: "#000000",
     terCol: "#000000",
+    logo: null,
+    refImg: null,
   });
 
   const [loading, setLoading] = useState(false);
@@ -39,14 +41,15 @@ const Gen = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    if (mats.assets && mats.copy) {
+    if (mats.assets && mats.copy && mats.refImg && mats.logo) {
       setLoading(true);
-      // formData.append('brandBook', mats.brandBook);
       formData.append("assets", mats.assets);
       formData.append("copy", mats.copy);
       formData.append("priCol", mats.priCol);
       formData.append("secCol", mats.secCol);
       formData.append("terCol", mats.terCol);
+      formData.append("ref", mats.refImg);
+      formData.append("logo", mats.logo);
       console.log(formData);
     } else alert("Please fill them all out");
 
@@ -75,12 +78,14 @@ const Gen = () => {
     const img = await imgRes.blob();
 
     const formData = new FormData();
-    if (mats.assets && mats.copy) {
+    if (mats.assets && mats.copy && mats.refImg && mats.logo) {
       formData.append("assets", mats.assets);
       formData.append("copy", mats.copy);
       formData.append("priCol", mats.priCol);
       formData.append("secCol", mats.secCol);
       formData.append("terCol", mats.terCol);
+      // formData.append("ref", mats.refImg);
+      formData.append("logo", mats.logo);
       formData.append("new_reference", img);
       console.log(formData);
     } else alert("Please fill them all out");
@@ -116,17 +121,7 @@ const Gen = () => {
         <h1>Generate Creative</h1>
         <form onSubmit={handleSubmit}>
           <h2>Copy:</h2>
-          <TextField
-            type="text"
-            onChange={handleChange}
-            value={mats.copy}
-            name="copy"
-            placeholder="Enter Copy"
-            label="Enter Copy"
-            multiline
-            maxRows={4}
-            className="text-input"
-          />
+          <TextField type="text" onChange={handleChange} value={mats.copy} name="copy" placeholder="Enter Copy" label="Enter Copy" multiline maxRows={4} className="text-input" />
           <h2>Colors:</h2>
           <div className="color-holder">
             <div>
@@ -143,37 +138,33 @@ const Gen = () => {
             </div>
           </div>
           <h2>Assets:</h2>
-          <Button className="button" variant="outlined" component="label">
+          <div>
+            <Button className="button" variant="outlined" component="label">
+              {mats.logo?.name || "Upload Logo"}
+              <input style={{ display: "none" }} type="file" onChange={handleChange} name="logo" accept="image/png" />
+            </Button>
+            <Button className="button" variant="outlined" component="label">
+              {mats.refImg?.name || "Upload Reference"}
+              <input style={{ display: "none" }} type="file" onChange={handleChange} name="refImg" accept="image/*" />
+            </Button>
+            <Button className="button" variant="outlined" component="label">
+              {mats.assets?.name || "Upload Assets"}
+              <input style={{ display: "none" }} type="file" onChange={handleChange} name="assets" accept="application/zip" />
+            </Button>
+          </div>
+          {/* <Button className="button" variant="outlined" component="label">
             {mats.assets?.name || "Upload Assets"}
-            <input
-              style={{ display: "none" }}
-              type="file"
-              onChange={handleChange}
-              name="assets"
-              placeholder={"Upload Assets"}
-            />
-          </Button>
-          <Button
-            className="button"
-            variant="contained"
-            type="submit"
-            size="large"
-            loading={loading}
-            disabled={!mats.assets || !mats.copy}
-          >
-            Submit
+            <input style={{ display: "none" }} type="file" onChange={handleChange} name="assets" placeholder={"Upload Assets"} />
+          </Button> */}
+          <Button className="button" variant="contained" type="submit" size="large" loading={loading} disabled={!mats.assets || !mats.copy}>
+            {imgUrl ? "Refresh" : "Submit"}
           </Button>
         </form>
       </div>
       <div className="image-container" style={imgUrl ? {} : { display: "none" }}>
         <div className="top-container">
           <img id="port-image" src={imgUrl} />
-          <img
-            id="square-image"
-            src={squareImgUrl}
-            style={squareImgUrl ? {} : { display: "none" }}
-            onClick={handleResize}
-          />
+          <img id="square-image" src={squareImgUrl} style={squareImgUrl ? {} : { display: "none" }} onClick={handleResize} />
         </div>
         <img id="landscape-image" src={landImgUrl} onClick={handleResize} />
         <div className="button-container">
