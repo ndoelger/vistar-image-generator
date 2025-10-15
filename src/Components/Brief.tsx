@@ -8,8 +8,12 @@ type Props = { brief?: string; setBrief: React.Dispatch<React.SetStateAction<str
 const Brief: React.FC<Props> = ({ brief, setBrief }) => {
   const [briefOpts, setBriefOpts] = useState({ dma: "", audience: "", kpi: "" });
 
+  const [briefLoading, setBriefLoading] = useState(false)
+
   const generateBrief = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    setBriefLoading(true)
 
     console.log(JSON.stringify(briefOpts));
     try {
@@ -22,6 +26,7 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
       const brief = await res.text();
 
       setBrief(brief);
+      setBriefLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -63,8 +68,8 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
       </div>
       <TextField style={{marginBottom:"30px"}} id="brief" value={brief} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBrief(e.target.value)} className="text-input" multiline maxRows={20} />
       
-      <Button  className="button" variant="contained" type="submit" size="large" onClick={generateBrief}>
-        Generate Brief
+      <Button  loading={briefLoading} className="button" variant="contained" type="submit" size="large" onClick={generateBrief}>
+        {brief ? "Refresh Brief": "Generate Brief"}
       </Button>
     </div>
   );

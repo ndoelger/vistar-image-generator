@@ -16,7 +16,7 @@ export const DMA_OPTIONS = [
   { value: "minneapolis", label: "Minneapolis-St. Paul", promptHint: "clean, design-forward" },
 ];
 export const AUDIENCE_OPTIONS = [
-  { value: "young_pros", label: "Young Professionals (25-35)", promptHint: "sleek, minimalist, on-the-go" },
+  { value: "young_pros", label: "Young Professionals", promptHint: "sleek, minimalist, on-the-go" },
   { value: "genz_students", label: "Gen Z / Students", promptHint: "bold color, playful, trend-led" },
   { value: "families", label: "Families / Parents", promptHint: "warm, friendly, relatable" },
   { value: "commuters", label: "Daily Commuters", promptHint: "high-contrast, quick-to-read, directional" },
