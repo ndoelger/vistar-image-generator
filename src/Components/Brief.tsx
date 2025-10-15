@@ -13,7 +13,7 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
 
     console.log(JSON.stringify(briefOpts));
     try {
-      const res = await fetch("http://127.0.0.1:5000/brief", {
+      const res = await fetch("https://img-gen-backend-56454417761.us-central1.run.app/brief", {
         method: "POST",
         body: JSON.stringify(briefOpts),
         headers: { "Content-Type": "application/json" },

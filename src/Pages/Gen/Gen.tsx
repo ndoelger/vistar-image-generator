@@ -21,7 +21,7 @@ const Gen = () => {
     copy: "",
     priCol: "#000000",
     secCol: "#000000",
-    terCol: "#000000"
+    terCol: "#000000",
   });
 
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ const Gen = () => {
   const [landImgUrl, setLandImgUrl] = useState("");
   const [squareImgUrl, setSquareImgUrl] = useState("");
 
-  const [brief, setBrief] = useState("")
+  const [brief, setBrief] = useState("");
 
   // const [imgUrlResize, setImgUrlResize] = useState({});
 
@@ -51,14 +51,14 @@ const Gen = () => {
       formData.append("priCol", mats.priCol);
       formData.append("secCol", mats.secCol);
       formData.append("terCol", mats.terCol);
-      if(mats.refImg)formData.append("ref", mats.refImg);
+      if (mats.refImg) formData.append("ref", mats.refImg);
       formData.append("logo", mats.logo);
-      formData.append("brief", brief)
+      formData.append("brief", brief);
       console.log(formData);
     } else alert("Please fill them all out");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/generate", {
+      const res = await fetch("https://img-gen-backend-56454417761.us-central1.run.app/generate", {
         method: "POST",
         body: formData,
       });
@@ -95,7 +95,7 @@ const Gen = () => {
     } else alert("Please fill them all out");
 
     try {
-      const landscape = await fetch("http://127.0.0.1:5000/resize/1536x1024", {
+      const landscape = await fetch("https://img-gen-backend-56454417761.us-central1.run.app/resize/1536x1024", {
         method: "POST",
         body: formData,
       });
@@ -104,7 +104,7 @@ const Gen = () => {
 
       setLandImgUrl(URL.createObjectURL(landscapeBlob));
 
-      const square = await fetch("http://127.0.0.1:5000/resize/1024x1024", {
+      const square = await fetch("https://img-gen-backend-56454417761.us-central1.run.app/resize/1024x1024", {
         method: "POST",
         body: formData,
       });
