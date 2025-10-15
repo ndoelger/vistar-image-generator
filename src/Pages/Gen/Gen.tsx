@@ -125,10 +125,21 @@ const Gen = () => {
         <h1>Generate Creative</h1>
         <form onSubmit={handleSubmit}>
           <h2>Copy:</h2>
+          <h4>Enter the main advertising or campaign message you want to test or build around. This should be your ad copy — the core text you want to appear in the creative.</h4>
           <TextField type="text" onChange={handleChange} value={mats.copy} name="copy" placeholder="Enter Copy" label="Enter Copy" multiline maxRows={4} className="text-input" />
           <h2>Brief:</h2>
+          <h4>
+            This section defines the targeting parameters for your campaign — who you're reaching, where they are, and what success looks like. We will use this to generate a design brief for you.
+          </h4>
           <Brief brief={brief} setBrief={setBrief} />
           <h2>Colors:</h2>
+          <h4>
+            Choose up to three brand colors to guide the creative design.
+            <br />
+            Primary: Main brand color <br />
+            Secondary: Supporting or accent color <br />
+            Tertiary: Optional highlight or background color
+          </h4>
           <div className="color-holder">
             <div>
               <h3>Primary</h3>
@@ -144,6 +155,14 @@ const Gen = () => {
             </div>
           </div>
           <h2>Assets:</h2>
+          <h4>
+            Upload all brand materials needed for the brief.
+            <br />
+            Logo: Add your company or campaign logo in .png format.
+            <br />
+            <strong>Reference:</strong> Upload any sample creative or reference imagery that shows your desired style. <br />
+            Assets: Add any other visuals, videos, or design elements you want included.
+          </h4>
           <div>
             <Button className="button" variant="outlined" component="label">
               {mats.logo?.name || "Upload Logo"}

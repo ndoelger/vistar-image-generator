@@ -32,6 +32,7 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
       <div id="brief-holder">
         <fieldset className="radio-holder">
           <h3>DMAs</h3>
+          <h4>Select the city/region where your campaign will run.</h4>
           {DMA_OPTIONS.map((opt) => (
             <label key={opt.label}>
               <input type="radio" name="dma" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
@@ -41,6 +42,7 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
         </fieldset>
         <fieldset className="radio-holder">
           <h3>Audience</h3>
+          <h4>Select your target customer groups.</h4>
           {AUDIENCE_OPTIONS.map((opt) => (
             <label key={opt.label}>
               <input type="radio" name="audience" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
@@ -50,6 +52,7 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
         </fieldset>
         <fieldset className="radio-holder">
           <h3>KPI Goals</h3>
+          <h4>Choose the main performance objectives for your campaign.</h4>
           {KPI_OPTIONS.map((opt) => (
             <label key={opt.label}>
               <input type="radio" name="kpi" value={opt.label} onChange={(e) => setBriefOpts({ ...briefOpts, [e.target.name]: e.target.value })} />
@@ -58,8 +61,9 @@ const Brief: React.FC<Props> = ({ brief, setBrief }) => {
           ))}
         </fieldset>
       </div>
-      <TextField id="brief" value={brief} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBrief(e.target.value)} className="text-input" multiline maxRows={20} />
-      <Button className="button" variant="contained" type="submit" size="large" onClick={generateBrief}>
+      <TextField style={{marginBottom:"30px"}} id="brief" value={brief} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBrief(e.target.value)} className="text-input" multiline maxRows={20} />
+      
+      <Button  className="button" variant="contained" type="submit" size="large" onClick={generateBrief}>
         Generate Brief
       </Button>
     </div>

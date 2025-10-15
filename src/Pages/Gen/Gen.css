@@ -37,6 +37,10 @@ h3 {
   margin-top: 0px;
 }
 
+h4 {
+  width: 80%;
+}
+
 .color-holder {
   display: flex;
   justify-content: center;
@@ -59,7 +63,7 @@ form {
 
 .text-input {
   width: 90%;
-  margin: auto !important;
+  margin: 0 auto 30px 0 !important;
 }
 
 .app-container {
@@ -89,7 +93,9 @@ form {
   width: 90%;
 }
 
-#port-image, #square-image, #landscape-image {
+#port-image,
+#square-image,
+#landscape-image {
   width: 50%;
   max-height: 850px;
   margin: 10px;
